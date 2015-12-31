@@ -1,2 +1,2 @@
 ### How_to_run
-- All the function files are in this directory only. Add this directory to path while running this program.
+- All the function files are in this directory only. Add this directory to path and run the main script- CSCI567_hw1_fall15.m.

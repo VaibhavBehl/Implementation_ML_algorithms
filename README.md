@@ -1,0 +1,1 @@
+General implementations of most common regression and classification algorithms. Their performance is measured on well known datasets from repositories like- UCI machine learning repository.
