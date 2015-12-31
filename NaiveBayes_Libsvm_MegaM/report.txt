@@ -1,0 +1,427 @@
+(use text wrapping to view properly)
+
+
+                          CSCI 544 Applied NLP: Homework 2
+
+                                    report.txt
+                                    
+                             Vaibhav Behl(vbehl@usc.edu)
+
+
+
+
+Contents
+--------
+
+1. Introduction
+2. Discussing Performance on 75% training and 25% development set
+3. Discussing Performance on 25% training and 75% development set
+4. Execution Steps for generating (.model) file over all data and (.out) file over unlabeled data
+5. Execution Steps for generating (.model) file over partial labeled dataset and (.out) file over remaining labeled dataset (splits)
+6. Brief description of all files being uploaded to bit-bucket account
+
+
+
+
+
+
+
+
+
+
+
+
+1. Introduction
+
+In this homework we were given tow datasets- IMDB movie review and Email messages. We were asked to report the performance of classification on these datasets using three different algorithms/tools- Naive Bayes, SVM, MegaM. A custom implementation of Naive Bayes was also required. All the parts of the homework were successfully completed and in below sections I present the various metrics of performance and answer to other questions asked.
+
+
+
+
+
+
+2. Discussing Performance on 75% training and 25% development set
+
+A small summary of results is as follows, complete results for this 'split' are at the end of this section.
+Email- Naive Bayes(F1 SPAM-0.985/HAM-0.985) > MegaM(F1 SPAM-0.979/HAM-0.978) > SVM(F1 SPAM-0.958/HAM-0.956)
+IMDB- MegaM(F1 Positive-0.879/Negative-0.876) > SVM(F1 Positive-0.876/Negative-0.876) > Naive Bayes(F1 Positive-0.841/Negative-0.852)
+
+For EMAIL Dataset, Naive Bayes performs the best, followed by MegaM and SVM. All note that there is not much difference between algorithms, as all are within two percent point of each other.
+The reason Naive Bayes performs slightly better than others could be attributed to the fact that this dataset is suitable for the 'naive' assumption of Naive Bayes algorithm. This basically means that features of this dataset express independence to each other when it comes to classification, hence we can consider them independent of each other. For this particular classification of SPAM and HAM(not spam), emails which are spam tend to have certain words which are not usually found in normal emails. These words can thus contribute meaningfully  to the classification outcome even when they are taken independently from neighboring words.
+
+For IMDB Dataset, MegaM performs the best, followed closely by SVM and then Naive Bayes. The slightly poor performance of Naive Bayes could be attributed to the fact that feature independence did not work as well as it did for Email Dataset. If the words used to describe Positive and Negative reviews don't differ by much than classification algorithms(like Naive Bayes) will not work as well (classes are not that separable, linear decision boundary is difficult).
+
+Performance also differs a lot between EMAIL and IMDB dataset. All the algorithms are performing better on the Email Dataset as compared to the IMDB dataset. This could be because of the inherent property of the dataset, where one dataset has features which are more easily separable compared to the other.
+
+EMAIL(75%-25% Split)
+-----
+	Naive Bayes
+	-----------
+	Precision of SPAM -  0.9828910614525139
+	Recall of SPAM -  0.9891075193253689
+	F1 score of SPAM -  0.9859894921190893
+	Precision of HAM -  0.9884629698548567
+	Recall of HAM -  0.9818853974121996
+	F1 score of HAM -  0.9851632047477744
+    SVM
+	---
+	Precision of SPAM -  0.9281133985825177
+	Recall of SPAM -  0.991705733862243
+	F1 score of SPAM -  0.9588563458856345
+	Precision of HAM -  0.991112828438949
+	Recall of HAM -  0.9233261339092873
+	F1 score of HAM -  0.9560193812896012
+    MegaM
+	-----
+	Precision of SPAM -  0.9753260486429327
+	Recall of SPAM -  0.9839971550497866
+	F1 score of SPAM -  0.9796424145866525
+	Precision of HAM -  0.9834193072955048
+	Recall of HAM -  0.9744432274552757
+	F1 score of HAM -  0.9789106913625527
+
+IMDB(75%-25% Split)
+----
+	Naive Bayes
+	-----------
+	Precision of POSITIVE - 0.8708677685950413
+	Recall of POSITIVE - 0.8131832797427653
+	F1 score of POSITIVE - 0.8410375789823744
+	Precision of NEGATIVE - 0.8263079222720479
+	Recall of NEGATIVE - 0.8805352022937241
+	F1 score of NEGATIVE - 0.8525601480567551
+    SVM
+	---
+	Precision of POSITIVE - 0.8627943485086342
+	Recall of POSITIVE - 0.8916288124594419
+	F1 score of POSITIVE - 0.8769746290090953
+	Precision of NEGATIVE - 0.8909921671018277
+	Recall of NEGATIVE - 0.8620145247868646
+	F1 score of NEGATIVE - 0.876263842079923
+    MegaM
+	-----
+	Precision of POSITIVE -  0.8736677115987461
+	Recall of POSITIVE -  0.8858868404322949
+	F1 score of POSITIVE -  0.8797348484848485
+	Precision of NEGATIVE -  0.8826797385620915
+	Recall of NEGATIVE -  0.8701675257731959
+	F1 score of NEGATIVE -  0.8763789746917585
+
+
+3. Discussing Performance on 25% training and 75% development set
+
+<RECAP of 75-25 results>
+Email- Naive Bayes(F1 SPAM-0.985/HAM-0.985) > MegaM(F1 SPAM-0.979/HAM-0.978) > SVM(F1 SPAM-0.958/HAM-0.956)
+IMDB- MegaM(F1 Positive-0.879/Negative-0.876) > SVM(F1 Positive-0.876/Negative-0.876) > Naive Bayes(F1 Positive-0.841/Negative-0.852)
+
+
+A small summary of results is as follows, complete results for this 'split' are at the end of this section.
+<25-75 results>
+Email- Naive Bayes(F1 SPAM-0.980/HAM-0.980) > MegaM(F1 SPAM-0.979/HAM-0.979) > SVM(F1 SPAM-0.940/HAM-0.934)
+IMDB- MegaM(F1 Positive-0.858/Negative-0.857) > SVM(F1 Positive-0.842/Negative-0.837) > Naive Bayes(F1 Positive-0.826/Negative-0.841)
+
+Comparing the above two results we can notice that the 'trend' remains the same across both datasets. That is, for Email- Naive Bayes is performing the best and for IMDB- MegaM is performing the best.
+There is a very slight dip in performance for Email dataset when we reduce the training data. SVM appears to have the most dip compared to other two.
+For IMDB data there is comparatively more drop in performance when dataset is reduced. All algorithms suffer this time, as performance for all decreases uniformly(~0.02 or 2%).
+
+EMAIL(25%-75% Split)
+-----
+	Naive Bayes
+	-----------
+	Precision of SPAM -  0.9801000953288846
+	Recall of SPAM -  0.9813864693950602
+	F1 score of SPAM -  0.9807428605496931
+	Precision of HAM -  0.9811138014527845
+	Recall of HAM -  0.9798089711038569
+	F1 score of HAM -  0.9804609521505052
+	SVM
+	---
+	Precision of SPAM -  0.8982498097619307
+	Recall of SPAM -  0.9879244380679101
+	F1 score of SPAM -  0.9409554176393555
+	Precision of HAM -  0.9864484100362271
+	Recall of HAM -  0.887065637065637
+	F1 score of HAM -  0.9341210850644812
+    MegaM
+	-----
+	Precision of SPAM -  0.9702192519638879
+	Recall of SPAM -  0.9897141490252362
+	F1 score of SPAM -  0.9798697454114862
+	Precision of HAM -  0.9894127785300997
+	Recall of HAM -  0.9693643710047039
+	F1 score of HAM -  0.9792859753868648
+
+IMDB(25%-75% Split)
+----
+	Naive Bayes
+	-----------
+	Precision of POSITIVE -  0.8684918684918685
+	Recall of POSITIVE -  0.7891771209866043
+	F1 score of POSITIVE -  0.8269370021723389
+	Precision of NEGATIVE -  0.8056263477749461
+	Recall of NEGATIVE -  0.8796960291127047
+	F1 score of NEGATIVE -  0.8410335124072653
+	SVM
+	---
+	Precision of POSITIVE - 0.8341651070908713
+	Recall of POSITIVE - 0.8515177244746338
+	F1 score of POSITIVE - 0.8427521008403361
+	Precision of NEGATIVE - 0.8467856751724894
+	Recall of NEGATIVE - 0.8289911011043208
+	F1 score of NEGATIVE - 0.8377939104995124
+	MegaM
+	-----
+	Precision of POSITIVE -  0.8504094058366576
+	Recall of POSITIVE -  0.8674376271549417
+	F1 score of POSITIVE -  0.85883912006361
+	Precision of NEGATIVE -  0.8657703567169034
+	Recall of NEGATIVE -  0.8485653560042508
+	F1 score of NEGATIVE -  0.8570815220308056
+
+
+
+
+4. Execution Steps for generating (.model) file over all data and (.out) file over unlabeled data
+
+Below are the 'Sequence of Execution' steps to get the output. Please see that all Input files and all python files are in the same directory while executing these files. These commands may be directly copy-pasted to the command prompt.
+
+(Execution in Whole Labeled Dataset & Unlabeled Testset)
+EMAIL
+-----
+	#[DATA INIT STEPS - need to do only once]
+	# Converting Email Folder(Enron1/2/4/5) Data to PDF(Project Data Format) format. Needs 'enron.vocab' and all enron folders in same directory. NOTE: Takes a LOT of TIME!!
+		python3 convertEnronToPdfFormat.py enron.feat
+	# Converting Email Test Files(spam_or_ham_test) to PDF(Project Data Format) format. Needs 'enron.vocab' and spam_or_ham_test folder in same directory. NOTE: Takes a LOT of TIME!!
+		python3 convertEnronTestToPdfFormat.py enron_test.feat
+	
+	#[EXECUTION STEPS - EMAIL + Naive Bayes]
+	# TRAINING Phase (nblearn.py)
+		python3 nblearn.py enron.feat spam.nb.model
+	# CLASSIFICATION Phase (nbclassify.py)
+		python3 nbclassify.py spam.nb.model enron_test.feat > spam.nb.out
+	
+	#[EXECUTION STEPS - EMAIL + SVM]
+	# Pre-Process Email data for SVM
+		python3 preEmailTrainDataSVM.py enron.feat > enron.svm.feat
+	# TRAINING Phase (./svm_learn)
+		./svm_learn enron.svm.feat spam.svm.model
+	# Pre-Process Email Test file for SVM
+		python3 preTestDataSVM.py enron_test.feat > enron_test.svm.feat
+	# CLASSIFICATION Phase (./svm_classify)
+		./svm_classify enron_test.svm.feat spam.svm.model spam.svm.pred.out
+	# Post-Process this output
+		python3 postProcess.py spam.svm.pred.out 0 SPAM HAM > spam.svm.out
+	
+	#[EXECUTION STEPS - EMAIL + MegaM]
+	# Pre-Process Email data for MegaM
+		python3 preEmailTrainDataMegaM.py enron.feat > enron.megam.feat
+	# TRAINING Phase (./megam_i686.opt)
+		./megam_i686.opt -fvals binary enron.megam.feat > spam.megam.model
+	# Pre-Process Email Test file for MegaM
+		python3 preTestDataMegaM.py enron_test.feat > enron_test.megam.feat
+	# CLASSIFICATION Phase (./megam_i686.opt) *
+		./megam_i686.opt -fvals -predict spam.megam.model binary enron_test.megam.feat > spam.megam.pred.out
+	# Post-Process this output *
+		python3 postProcess.py spam.megam.pred.out 0.5 SPAM HAM > spam.megam.out
+
+
+IMDB
+----
+	#[EXECUTION STEPS - IMDB + Naive Bayes]
+	# Converting IMDB feat file to PDF(Project Data Format) Format
+		python3 convertImdbToPdfFormat.py labeledBow.feat > imdb.feat
+	# TRAINING Phase (nblearn.py)
+		python3 nblearn.py imdb.feat sentiment.nb.model
+	# CLASSIFICATION Phase (nbclassify.py)
+		python3 nbclassify.py sentiment.nb.model sentiment_test.feat > sentiment.nb.out
+	
+	#[EXECUTION STEPS - IMDB + SVM]
+	# Pre-Process IMDB labeled data for SVM
+		python3 preImdbTrainDataSVM.py labeledBow.feat > imdb.feat
+	# TRAINING Phase (./svm_learn)
+		./svm_learn imdb.feat sentiment.svm.model
+	# Pre-Process IMDB Test file for SVM
+		python3 preTestDataSVM.py sentiment_test.feat > sentiment_test.svm.feat
+	# CLASSIFICATION Phase (./svm_classify)
+		./svm_classify sentiment_test.svm.feat sentiment.svm.model sentiment.svm.pred.out
+	# Post-Process this output
+		python3 postProcess.py sentiment.svm.pred.out 0 POSITIVE NEGATIVE > sentiment.svm.out
+	
+	#[EXECUTION STEPS - IMDB + MegaM]
+	# Pre-Process IMDB data for MegaM
+		python3 preImdbTrainDataMegaM.py labeledBow.feat > imdb.feat
+	# TRAINING Phase (./megam_i686.opt)
+		./megam_i686.opt -fvals binary imdb.feat > sentiment.megam.model
+	# Pre-Process IMDB Test file for MegaM
+		python3 preTestDataMegaM.py sentiment_test.feat > sentiment_test.megam.feat	
+	# CLASSIFICATION Phase (./megam_i686.opt)
+		./megam_i686.opt -fvals -predict sentiment.megam.model binary sentiment_test.megam.feat > sentiment.megam.pred.out
+	# Post-Process this output
+		python3 postProcess.py sentiment.megam.pred.out 0.5 POSITIVE NEGATIVE > sentiment.megam.out
+
+
+
+5. Execution Steps for generating (.model) file over partial labeled dataset and (.out) file over remaining labeled dataset (splits)
+
+Below are the 'Sequence of Execution' steps to get the output. Please see that all Input files and all python files are in the same directory while executing these files. These commands may be directly copy-pasted to the command prompt.
+
+(Execution on Partial Labeled Dataset - Split Mode)
+EMAIL
+-----
+	#[DATA INIT STEPS - need to do only once]
+	# Converting Email Folder(Enron-1,2,4,5) Data to PDF(Project Data Format) format. Need enron.vocab and all enron folders in same directory. NOTE: Takes a LOT of TIME!!
+		python3 convertEnronToPdfFormat.py enron.feat
+	
+	#[EXECUTION STEPS - EMAIL + Naive Bayes]
+	# Splitting  75%/25%
+		python3 splitDataRandomly.py enron.feat 75 spam.tr spam.te
+	# OR	  
+	# Splitting  25%/75%
+		python3 splitDataRandomly.py enron.feat 25 spam.tr spam.te
+	# TRAINING Phase (nblearn.py) *
+		python3 nblearn.py spam.tr spam.nb.model
+	# Convert test data to PDF format by removing Class Labels
+		python3 preTestDataRemoveLabels.py spam.te > spam.pdf.te
+	# CLASSIFICATION Phase (nbclassify.py) *
+		python3 nbclassify.py spam.nb.model spam.pdf.te > spam.nb.out
+	# Get Original Labels
+		python3 getOrigLabelsTestDataNB.py spam.te > spam.te.orig.out
+	# Report Metrics to STDOUT
+		python3 reportMetrics.py spam.te.orig.out spam.nb.out SPAM HAM
+	
+	#[EXECUTION STEPS - EMAIL + SVM]
+	# Pre-Process Email data for SVM
+		python3 preEmailTrainDataSVM.py enron.feat > enron.svm.feat
+	# Splitting  75%/25%
+		python3 splitDataRandomly.py enron.svm.feat 75 spam.tr spam.te
+	# OR
+	# Splitting  25%/75%
+		python3 splitDataRandomly.py enron.svm.feat 25 spam.tr spam.te
+	# TRAINING Phase (./svm_learn) *
+		./svm_learn spam.tr spam.svm.model
+	# CLASSIFICATION Phase (./svm_classify) *
+		./svm_classify spam.te spam.svm.model spam.svm.pred.out
+	# Post-Process this output *
+		python3 postProcess.py spam.svm.pred.out 0 SPAM HAM > spam.svm.out
+	# Get Original Labels
+		python3 getOrigLabelsTestData.py spam.te 1 SPAM -1 HAM > spam.te.orig.out
+	# Report Metrics to STDOUT
+		python3 reportMetrics.py spam.te.orig.out spam.svm.out SPAM HAM
+	
+	#[EXECUTION STEPS - EMAIL + MegaM]
+	# Pre-Process Email data for MegaM
+		python3 preEmailTrainDataMegaM.py enron.feat > enron.megam.feat
+	# Splitting  75%/25%
+		python3 splitDataRandomly.py enron.megam.feat 75 spam.tr spam.te
+	# OR
+	# Splitting  25%/75%
+		python3 splitDataRandomly.py enron.megam.feat 25 spam.tr spam.te
+	# TRAINING Phase (./megam_i686.opt) *
+		./megam_i686.opt -fvals binary spam.tr > spam.megam.model
+	# CLASSIFICATION Phase (./megam_i686.opt) *
+		./megam_i686.opt -fvals -predict spam.megam.model binary spam.te > spam.megam.pred.out
+	# Post-Process this output *
+		python3 postProcess.py spam.megam.pred.out 0.5 SPAM HAM > spam.megam.out
+	# Get Original Labels
+		python3 getOrigLabelsTestData.py spam.te 1 SPAM 0 HAM > spam.te.orig.out
+	# Report Metrics to STDOUT
+		python3 reportMetrics.py spam.te.orig.out spam.megam.out SPAM HAM
+
+IMDB
+-----
+
+	#[EXECUTION STEPS - IMDB + Naive Bayes]
+	# Converting IMDB feat file to PDF(Project Data Format) Format
+		python3 convertImdbToPdfFormat.py labeledBow.feat > imdb.feat
+	# Splitting  75%/25%
+		python3 splitDataRandomly.py imdb.feat 75 imdb.tr imdb.te
+	# OR	  
+	# Splitting  25%/75%
+		python3 splitDataRandomly.py imdb.feat 25 imdb.tr imdb.te
+	# TRAINING Phase (nblearn.py) *
+		python3 nblearn.py imdb.tr sentiment.nb.model
+	# Convert test data to PDF format by removing Class Labels
+		python3 preTestDataRemoveLabels.py imdb.te > imdb.pdf.te
+	# CLASSIFICATION Phase (nbclassify.py) *
+		python3 nbclassify.py sentiment.nb.model imdb.pdf.te > sentiment.nb.out
+	# Get Original Labels
+		python3 getOrigLabelsTestDataNB.py imdb.te > imdb.te.orig.out
+	# Report Metrics to STDOUT
+		python3 reportMetrics.py imdb.te.orig.out sentiment.nb.out POSITIVE NEGATIVE
+	
+	#[EXECUTION STEPS - IMDB + SVM]
+	# Pre-Process IMDB labeled data for SVM
+		python3 preImdbTrainDataSVM.py labeledBow.feat > imdb.feat
+	# Splitting  75%/25%
+		python3 splitDataRandomly.py imdb.feat 75 imdb.tr imdb.te
+	# OR
+	# Splitting  25%/75%
+		python3 splitDataRandomly.py imdb.feat 25 imdb.tr imdb.te
+	# TRAINING Phase (./svm_learn) *
+		./svm_learn imdb.tr sentiment.svm.model
+	# CLASSIFICATION Phase (./svm_classify) *
+		./svm_classify imdb.te sentiment.svm.model sentiment.svm.pred.out
+	# Post-Process this output *
+		python3 postProcess.py sentiment.svm.pred.out 0 POSITIVE NEGATIVE > sentiment.svm.out
+	# Get Original Labels
+		python3 getOrigLabelsTestData.py imdb.te 1 POSITIVE -1 NEGATIVE > imdb.te.orig.out
+	# Report Metrics to STDOUT
+		python3 reportMetrics.py imdb.te.orig.out sentiment.svm.out POSITIVE NEGATIVE
+	
+	#[EXECUTION STEPS - IMDB + MegaM]
+	# Pre-Process IMDB data for MegaM
+		python3 preImdbTrainDataMegaM.py labeledBow.feat > imdb.feat
+	# Splitting  75%/25%
+		python3 splitDataRandomly.py imdb.feat 75 imdb.tr imdb.te
+	# OR
+	# Splitting  25%/75%
+		python3 splitDataRandomly.py imdb.feat 25 imdb.tr imdb.te
+	# TRAINING Phase (./megam_i686.opt) *
+		./megam_i686.opt -fvals binary imdb.tr > sentiment.megam.model
+	# CLASSIFICATION Phase (./megam_i686.opt) *
+		./megam_i686.opt -fvals -predict sentiment.megam.model binary imdb.te > sentiment.megam.pred.out
+	# Post-Process this output *
+		python3 postProcess.py sentiment.megam.pred.out 0.5 POSITIVE NEGATIVE > sentiment.megam.out
+	# Get Original Labels
+		python3 getOrigLabelsTestData.py imdb.te 1 POSITIVE 0 NEGATIVE > imdb.te.orig.out
+	# Report Metrics to STDOUT
+		python3 reportMetrics.py imdb.te.orig.out sentiment.megam.out POSITIVE NEGATIVE
+		
+		
+
+6. Brief description of all files being uploaded to bit-bucket account
+
+List of all files(using ls command) and a brief description of what they do. For script files, to get detailed description see associated documentation inside each script file.
+
+convertEnronTestToPdfFormat.py - to create a single TEST file from *.txt files present in spam_or_ham_test.
+convertEnronToPdfFormat.py - to create a single file from all Email(enron) labelled data.
+convertImdbToPdfFormat.py - This file will CONVERT IMDB Training Data data to PDF(Project Data Format).
+getOrigLabelsTestDataNB.py - will print to stdout the original TARGETS against which we have to report our metric scores.
+getOrigLabelsTestData.py - will print to stdout the original TARGETS against which we have to report our metric scores.
+nbclassify.py - This is the CLASSIFICATION phase of Naive Bayes which will generate a Prediction to stdout from a ModelFile and TestFile passed as cmd argument.
+nblearn.py - This is the LEARNING phase of Naive Bayes which will generate a Model file from training data passed to it.
+postProcess.py - This file will post-process various outputs generated for SVM/MegaM.
+preEmailTrainDataMegaM.py - This file will pre-process for MegaM the EMAIL Training Data.
+preEmailTrainDataSVM.py - This file will pre-process for SVM the EMAIL Training Data.
+preImdbTrainDataMegaM.py - This file will pre-process the IMDB Training Data(labeledBow.feat) data for MegaM.
+preImdbTrainDataSVM.py - This file will pre-process the IMDB Training Data(labeledBow.feat) data for SVM.
+preTestDataMegaM.py - This file will pre-process the Test data(sentiment_test.feat or enron_test.feat) data, which is in PDF format, for MegaM.
+preTestDataRemoveLabels.py - This file will pre-process the Test data(derived from training set) and remove the Labels(first colums) from each line, so that it is converted to PDF format.
+preTestDataSVM.py - This file will pre-process the Test data(sentiment_test.feat or enron_test.feat) data, which is in PDF format, for SVM.
+reportMetrics.py - Prints various scores/metrics(precision, recall, F1) to the STDOUT.
+report.txt - The report file itself.
+sentiment.megam.model - MegaM model on labeled IMDB dataset
+sentiment.megam.out - MegaM Output file on unlabeled IMDB testset
+sentiment.nb.model - Naive Bayes model on labeled IMDB dataset
+sentiment.nb.out - Naive Bayes Output file on unlabeled IMDB testset
+sentiment.svm.model - SVM model on labeled IMDB dataset
+sentiment.svm.out - SVM Output file on unlabeled IMDB testset
+spam.megam.model - MegaM model on Email(enron) dataset
+spam.megam.out - MegaM Output file on unlabeled Email(enron) testset
+spam.nb.model - Naive Bayes model on Email(enron) dataset
+spam.nb.out - Naive Bayes Output file on unlabeled Email(enron) testset
+spam.svm.model - SVM model on Email(enron) dataset
+spam.svm.out - SVM Output file on unlabeled Email(enron) testset
+splitDataRandomly.py - This file will split out Training file into two files RANDOMLY based on command line argument.
+
+
